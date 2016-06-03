@@ -1,3 +1,4 @@
+#include "DhtSensor.h"
 #include <OneWire.h>
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
