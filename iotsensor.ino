@@ -3,17 +3,24 @@
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
-#include <DHT.h>
+
 #include <DallasTemperature.h>
-#define DHTTYPE DHT11
-#define DHTPIN  13
 #define DS18B20PIN 12
-#define RESPONSE_LED LED_BUILTIN
 #define SENSOR_RESOLUTION 12 // How many bits to use for temperature values: 9, 10, 11 or 12
 #define SENSOR_INDEX 0 // Index of sensors connected to data pin, default: 0
 
+
+
+
 //#define RED_LED 4
 #define WHITE_LED 5
+#define RESPONSE_LED LED_BUILTIN
+
+
+
+#include <DHT.h>
+#define DHTTYPE DHT11
+#define DHTPIN  13
 
 
 const char* ssid     = "Kist_2.4";
@@ -44,6 +51,8 @@ DallasTemperature sensors(&oneWire);
 DeviceAddress sensorDeviceAddress;
 
 float temperatureInCelsius;
+
+DhtSensor sensor1(DHTPIN);
 
 
 

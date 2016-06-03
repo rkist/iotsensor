@@ -1,10 +1,18 @@
 #ifndef ClassA_Def
 #define ClassA_Def
 
-class ClassA
+
+
+class DhtSensor
 {
 	public:
-		ClassA();
+		DhtSensor(int pin);
+		
+		float ReadTemperature();
+		float ReadHumidity();
+		
+	private:
+		int pin;
 };
 
 #endif
