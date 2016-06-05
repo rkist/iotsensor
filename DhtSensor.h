@@ -1,5 +1,5 @@
-#ifndef ClassA_Def
-#define ClassA_Def
+#ifndef DhtSensor_Def
+#define DhtSensor_Def
 
 #include <DHT.h>
 

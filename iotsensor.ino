@@ -1,13 +1,11 @@
 #include "DhtSensor.h"
-#include <OneWire.h>
+#include "DsSensor.h"
+
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
 
-#include <DallasTemperature.h>
-#define DS18B20PIN 12
-#define SENSOR_RESOLUTION 12 // How many bits to use for temperature values: 9, 10, 11 or 12
-#define SENSOR_INDEX 0 // Index of sensors connected to data pin, default: 0
+
 
 
 
@@ -16,6 +14,7 @@
 #define WHITE_LED 5
 #define RESPONSE_LED LED_BUILTIN
 #define DHTPIN  13
+#define DS18B20PIN 12
 
 
 
@@ -35,14 +34,12 @@ unsigned long previousMillis = 0;        // will store last temp was read
 const long interval = 2000;              // interval at which to read sensor
 
 
-//DS18B20
-OneWire oneWire(DS18B20PIN);
-DallasTemperature sensors(&oneWire);
-DeviceAddress sensorDeviceAddress;
+
 
 float temperatureInCelsius;
 
 DhtSensor sensor1(DHTPIN);
+DsSensor sensor2(DS18B20PIN);
 
 
 
@@ -59,8 +56,7 @@ void readSensor()
     // save the last time you read the sensor
     previousMillis = currentMillis;
 
-    sensors.requestTemperatures(); // Measurement may take up to 750ms
-    temperatureInCelsius = sensors.getTempCByIndex(SENSOR_INDEX); 
+	temperatureInCelsius = sensor2.ReadTemperature();
 
     humidity = sensor1.ReadHumidity();
     temp = sensor1.ReadTemperature();
@@ -134,10 +130,6 @@ void setup(void)
 {
   // You can open the Arduino IDE Serial Monitor window to see what the code is doing
   Serial.begin(115200);  // Serial connection from ESP-01 via 3.3v console cable
-
-  sensors.begin();
-  sensors.getAddress(sensorDeviceAddress, 0);
-  sensors.setResolution(sensorDeviceAddress, SENSOR_RESOLUTION);
 
   pinMode(RESPONSE_LED, OUTPUT);
   pinMode(WHITE_LED, OUTPUT);
