@@ -1,7 +1,7 @@
 #ifndef ClassA_Def
 #define ClassA_Def
 
-
+#include <DHT.h>
 
 class DhtSensor
 {
@@ -12,7 +12,7 @@ class DhtSensor
 		float ReadHumidity();
 		
 	private:
-		int pin;
+		DHT* dht;
 };
 
 #endif

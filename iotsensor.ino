@@ -15,12 +15,10 @@
 //#define RED_LED 4
 #define WHITE_LED 5
 #define RESPONSE_LED LED_BUILTIN
-
-
-
-#include <DHT.h>
-#define DHTTYPE DHT11
 #define DHTPIN  13
+
+
+
 
 
 const char* ssid     = "Kist_2.4";
@@ -28,15 +26,7 @@ const char* password = "valar morghulis";
 
 ESP8266WebServer server(80);
 
-// Initialize DHT sensor
-// NOTE: For working with a faster than ATmega328p 16 MHz Arduino chip, like an ESP8266,
-// you need to increase the threshold for cycle counts considered a 1 or 0.
-// You can do this by passing a 3rd parameter for this threshold.  It's a bit
-// of fiddling to find the right value, but in general the faster the CPU the
-// higher the value.  The default for a 16mhz AVR is a value of 6.  For an
-// Arduino Due that runs at 84mhz a value of 30 works.
-// This is for the ESP8266 processor on ESP-01
-DHT dht(DHTPIN, DHTTYPE, 11); // 11 works fine for ESP8266
+
 
 float humidity, temp;  // Values read from sensor
 String webString = "";   // String to display
@@ -72,17 +62,8 @@ void readSensor()
     sensors.requestTemperatures(); // Measurement may take up to 750ms
     temperatureInCelsius = sensors.getTempCByIndex(SENSOR_INDEX); 
 
-    // Reading temperature for humidity takes about 250 milliseconds!
-    // Sensor readings may also be up to 2 seconds 'old' (it's a very slow sensor)
-    humidity = dht.readHumidity();          // Read humidity (percent)
-    temp = dht.readTemperature(false);     // Read temperature as Fahrenheit
-    // Check if any reads failed and exit early (to try again).
-    if (isnan(humidity) || isnan(temp)) 
-    {
-      Serial.println("Failed to read from DHT sensor!");
-    }
-     
-      
+    humidity = sensor1.ReadHumidity();
+    temp = sensor1.ReadTemperature();
   }
 }
 
@@ -153,7 +134,6 @@ void setup(void)
 {
   // You can open the Arduino IDE Serial Monitor window to see what the code is doing
   Serial.begin(115200);  // Serial connection from ESP-01 via 3.3v console cable
-  dht.begin();           // initialize temperature sensor
 
   sensors.begin();
   sensors.getAddress(sensorDeviceAddress, 0);
