@@ -1,0 +1,5 @@
+TODO:
+.refactory
+..separar em classes
+..fazer interfaces
+.setar SSID e passwd
